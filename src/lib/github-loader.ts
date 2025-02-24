@@ -16,7 +16,7 @@ export const loadGithubRepo = async (githubUrl: string, githubToken?: string) =>
     return docs
 }
 
-// console.log(await loadGithubRepo("https://github.com/dialite/Sage"))
+// console.log(await loadGithubRepo("https://github.com/dialite/budget-app"))
 
 export const indexGithubRepo = async (projectId: string, githubUrl: string, githubToken?: string) => {
     const docs = await loadGithubRepo(githubUrl, githubToken) 

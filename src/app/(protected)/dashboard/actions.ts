@@ -53,8 +53,7 @@ export async function askQuestion(question: string, projectId: string) {
             If the context does not provide the answer to question, the AI assistant will say, "I'm sorry, but I don't know the answer to that question".
             AI assistant will not apologies for previous responses, but instead will indicate new information was gained.
             AI assistant will not invent anything that is not drawn directly from the context.
-            Answer in markdown syntax, with code snippets if needed. Be as detailed as possible when answering, make sure there is
-            `
+            Answer in markdown syntax, with code snippets if needed. Be as detailed as possible when answering, make sure there is a clear, complete explanation for each step.`
         })
 
         for await (const delta of textStream) {

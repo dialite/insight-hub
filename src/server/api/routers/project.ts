@@ -26,18 +26,33 @@ export const projectRouter = createTRPCRouter({
         await pollCommits(project.id)
         return project
     }),
-    getProjects: protectedProcedure.query(async ({ ctx }) => {
-        return await ctx.db.project.findMany({
-            where: {
-                userToProjects: {
-                    some: {
-                        userId: ctx.user.userId!
-                    }
-                },
-                deletedAt: null
+    getProjects: protectedProcedure
+  .input(z.object({}).optional())
+  .query(async ({ ctx }) => {
+    try {
+      const projects = await ctx.db.project.findMany({
+        where: {
+          userToProjects: {
+            some: {
+              userId: ctx.user.userId!
             }
-        });
-    }),
+          },
+          deletedAt: null
+        }
+      });
+
+      // Handle empty project list gracefully
+      if (!projects || projects.length === 0) {
+        return { projects: [], message: "No projects found." };
+      }
+
+      return { projects };
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      throw new Error("Failed to fetch projects. Please try again later.");
+    }
+  }),
+
     getCommits: protectedProcedure.input(z.object({
         projectId: z.string()
     })).query(async ({ctx, input}) => {

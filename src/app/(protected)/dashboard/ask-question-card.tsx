@@ -46,7 +46,7 @@ const AskQuestionCard = () => {
                 {answer}
                 <h1>Files References</h1>
                 {filesReferences.map(file => {
-                    return <span>{file.fileName}</span>
+                    return <span key={file.fileName}>{file.fileName}</span>
                 })}
             </DialogContent>
         </Dialog>

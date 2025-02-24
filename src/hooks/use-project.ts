@@ -3,9 +3,10 @@ import React from 'react';
 import {useLocalStorage} from "usehooks-ts"
 
 const useProject = () => {
-  const {data: projects} = api.project.getProjects.useQuery()
+  const {data} = api.project.getProjects.useQuery()
+  const projects = data?.projects || []; // Safely access the projects array
   const [projectId, setProjectId] = useLocalStorage("insight-projectId", "")
-  const project = projects?.find(project => project.id === projectId )
+  const project = projects?.find((project) => project.id === projectId )
   return {
     projects,
     project,
